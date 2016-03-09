@@ -1,5 +1,5 @@
-# ngFit App
-![Building a ngFit App with AngularJS]()
+# MyFitApp App
+![Building a MyFitApp App with AngularJS]()
 # Install
 ```sh
 $ git clone <<<this url>>>
