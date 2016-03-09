@@ -1,13 +1,13 @@
 {
-  "name": "ngFit",
+  "name": "myFitMap",
   "version": "1.0.0",
-  "homepage": "https://github.com/Severenit/ngFit",
+  "homepage": "https://myfitmap.loc",
   "authors": [
-    "Zar Zakharov"
+    "Andrey Pindyuk"
   ],
-  "description": "It is a simple application that runs gulp and helps in work.",
+  "description": "It is a application that helps you for your fitness traning.",
   "keywords": [
-    "ngFit",
+    "myFitMap",
     "angularjs"
   ],
   "license": "MIT",

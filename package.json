@@ -1,22 +1,22 @@
 {
-  "name": "ngFit",
+  "name": "myFitMap",
   "version": "1.0.0",
-  "description": "It is a simple application that runs gulp and helps in work.",
+  "description": "It is a application that helps you for your fitness traning.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Severenit/ngFit.git"
+    "url": "https://myfitmap.loc"
   },
   "keywords": [
-    "ngFit",
+    "myFitMap",
     "angualrjs"
   ],
-  "author": "Zar Zakharov",
+  "author": "Andrey Pindyuk",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Severenit/ngFit/issues"
+    "url": "https://myfitmap.loc"
   },
   "devDependencies": {
     "gulp": "^3.8.8",
