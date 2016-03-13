@@ -1,0 +1,41 @@
+<div class="wrap" ng-controller="AuthCtrl as ac">
+<div id="simple-dialog" class="modal fade in" tabindex="-1"  >
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Введите e-mail и пароль</h4><br>
+      </div>
+      <div class="modal-body">
+        <form name="loginForm">
+          
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="E-mail" ng-model="ac.credentails.email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Пароль" ng-model="ac.credentails.password">
+          </div>
+         
+         
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+         <button   class="btn btn-primary" ng-click="ac.login()" data-dismiss="modal">Войти</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-dismissible alert-success reg-msg-success" id="success-reg-msg" ng-show="ac.regMsgSuccsess">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Добро пожаловать!</strong>
+</div>
+
+<div class="alert alert-dismissible alert-danger reg-msg-error" id="error-reg-msg" ng-show="ac.regMsgError">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Попробуйте еще раз!</strong>
+</div>
+
+</div>

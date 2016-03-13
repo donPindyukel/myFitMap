@@ -1,0 +1,28 @@
+<div id="registration-dialog"  class="modal fade in" tabindex="-1"  ng-controller="AuthCtrl as ac">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Регистрация</h4>
+        <br></div>
+      <form name="loginForm" novalidate ng-submit="ac.register()">
+        <div class="modal-body">
+
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Введите Имя" required ng-model="ac.newUser.firstname"></div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Введите Фамилию" required ng-model="ac.newUser.lastname"></div>
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="E-mail" required ng-model="ac.newUser.email"></div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Пароль" required ng-model="ac.newUser.password"></div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" id="close-regform" data-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-primary"  ng-disabled="loginForm.$invalid" >Зарегистрироваться</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
