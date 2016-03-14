@@ -1,0 +1,59 @@
+<div class="panel panel-primary">
+<div class="panel-heading">
+			<h2 class="panel-title">Учетная запись</h2>
+		</div>
+		<div class="panel-body">
+			<div class="row center-block">
+				<form class="form-horizontal" ng-submit="prf.userUpdate(prf.userData)">
+					<fieldset class="center-block">
+						<!--===================== NAME================ -->
+						<div class="form-group">
+							<label for="inputName" class="col-xs-4 control-label">Имя пользователя</label>
+							<div class="col-xs-6">
+								<input type="text" class="form-control" id="inputName" ng-model="prf.userData.name"></div>
+						</div>
+						<!--===================== Email================ -->
+						<div class="form-group">
+							<label for="inputEmail" class="col-xs-4 control-label">Email</label>
+							<div class="col-xs-6">
+								<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="prf.userData.email"></div>
+						</div>
+						<!--===================== Weight================ -->
+						<div class="form-group">
+							<label for="inputWeight" class="col-xs-4 control-label">Вес</label>
+							<div class="col-xs-6">
+								<div class="input-group">
+									<input type="number" step="0.1" class="form-control" id="inputWeight" placeholder="Вес" ng-model="prf.userData.weight">
+									<span class="input-group-addon">кг</span>
+								</div>
+							</div>
+						</div>
+						<!--===================== Growth================ -->
+						<div class="form-group">
+							<label for="inputGrowth" class="col-xs-4 control-label">Рост</label>
+							<div class="col-xs-6">
+								<div class="input-group">
+									<input type="number" step="0.1" class="form-control" id="inputGrowth" placeholder="Рост" ng-model="prf.userData.growth">
+									<span class="input-group-addon">см</span>
+								</div>
+							</div>
+						</div>
+						<!--===================== BirthDay================ -->
+						<div class="form-group">
+							<label for="inputBirthDay" class="col-xs-4 control-label">Дата рождения</label>
+							<div class="col-xs-6">
+								<input type="date" step="0.1" class="form-control" id="inputBirthDay" placeholder="Дата рождения" ng-model="prf.userData.birthDay"></div>
+						</div>
+						<!--===================== Buttons================ -->
+						<div class="form-group">
+							<div class="col-xs-6 col-xs-offset-4">
+								<button type="submit" class="btn btn-primary">Сохранить</button>
+								<button type="button" class="btn btn-default" ng-click="prf.cancel()">Отмена</button>
+							</div>
+						</div>
+					</fieldset>
+
+				</form>
+			</div>
+		</div>
+	</div>

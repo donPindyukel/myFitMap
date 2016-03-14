@@ -19,6 +19,7 @@ function MyFitMapMainCnf ($routeProvider) {
 MainCtrl.$inject = ["$scope","$rootScope","Authorization"];
 function MainCtrl($scope,$rootScope,Authorization) {
 	console.log("MainCtrl Start");
+	
 	var vm = this;
 	vm.title = "Это главная страница";
 	$rootScope.curPath = "home";

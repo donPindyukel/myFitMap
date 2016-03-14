@@ -3,8 +3,8 @@
 	angular.module("Authorize",[])
 		.factory('Authorization', AuthorizeFactory);
 
-		AuthorizeFactory.$inject = ["FIREBASE_URL","$firebaseAuth","$firebaseArray","$firebaseObject","$rootScope"];
-		function AuthorizeFactory (FIREBASE_URL,$firebaseAuth,$firebaseArray,$firebaseObject,$rootScope){
+		AuthorizeFactory.$inject = ["FIREBASE_URL","$firebaseAuth","$firebaseArray","$firebaseObject","$rootScope","$location"];
+		function AuthorizeFactory (FIREBASE_URL,$firebaseAuth,$firebaseArray,$firebaseObject,$rootScope,$location){
 			 console.log("Auth Factory");
 			 var ref = new Firebase(FIREBASE_URL);
 			 var usersRef = ref.child('users');
@@ -17,6 +17,9 @@
        				var curUser = $firebaseObject(curUserRef);
        				curUser.$loaded(function(_user){
        					$rootScope.currentUser = _user;
+       					$location.path("");
+       					$location.path("profile");
+       					//console.log($rootScope.currentUser);
        				});
        				       				 
   				} else {
@@ -31,7 +34,7 @@
 			 var authObj = {
 
 			 	register: function (_user) {
-			 			//console.log(auth);
+			 			console.log(_user);
 			 		return auth.$createUser({
 			 			email:_user.email,
 			 			password:_user.password
@@ -39,8 +42,7 @@
 			 			console.log("User " + userData.uid + " created successfully!");
 			 			var userRef = ref.child("users").child(userData.uid);
 						userRef.set({
-							firstname:_user.firstname,
-							lastname:_user.lastname,
+							name:_user.firstname + " " +_user.lastname,
 							email:_user.email,
 							date:Firebase.ServerValue.TIMESTAMP
 			 	
@@ -50,7 +52,7 @@
 							password:_user.password
 						});
 					}).catch(function(error){
-						$log.error("Create user error", error);
+						console.log("Create user error", error);
 					});
 
 			 	},
@@ -75,6 +77,16 @@
 			 	logout: function() {
 
 			 		auth.$unauth();
+			 	},
+
+			 	changePass: function (pass) {
+			 		auth.$changePassword(pass)
+			 			.then(function() {
+  							console.log("Password changed successfully!");
+					    }).catch(function(error) {
+  								console.error("Error: ", error);
+						});
+
 			 	}
 
 			 };
@@ -82,6 +94,14 @@
 			$rootScope.signedIn = function () {
 				return authObj.signedIn();
 			};
+
+			$rootScope.logout = function (){
+
+	 			authObj.logout();
+	 			var url = $location.path("");
+	 		
+
+			}
 
 			return authObj;
 		};

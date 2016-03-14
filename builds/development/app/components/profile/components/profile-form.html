@@ -1,0 +1,15 @@
+<div class="well" ng-switch on="prf.state">
+	<div ng-switch-when="userdata">
+		<div ng-include="'app/components/profile/components/profile-form-userdata.html'"></div>
+	</div>
+
+	<div ng-switch-when="changepass">
+		<div ng-include="'app/components/profile/components/profile-form-changepassword.html'"></div>
+	</div>
+
+	<div ng-switch-when="changedesign">
+		<div ng-include="'app/components/profile/components/profile-form-design.html'"></div>
+	</div>
+
+</div>
+

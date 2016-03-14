@@ -1,0 +1,22 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Меню</h3>
+	</div>
+	<div class="panel-body">
+		<ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+			<li ng-class="{'active':(prf.state == 'userdata')}">
+				<a href="javascript:void(0)" ng-click="prf.state='userdata'">Учетная запись</a>
+			</li>
+			<li ng-class="{'active':(prf.state == 'changepass')}">
+				<a href="javascript:void(0)" ng-click="prf.state='changepass'">Сменить пароль</a>
+			</li>
+			<li ng-class="{'active':(prf.state == 'changedesign')}">
+				<a href="javascript:void(0)" ng-click="prf.state='changedesign'">Дизайн</a>
+			</li>
+			<li>
+				<a href="javascript:void(0)" ng-click="logout()">Выйти</a>
+			</li>
+
+		</ul>
+	</div>
+</div>

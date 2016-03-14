@@ -15,7 +15,7 @@
 	 	console.log("AuthController start");
 	 	vm.newUser = {
 	 		firstname:null,
-	 		lastName:null,
+	 		lastname:null,
 	 		email:null,
 	 		password:null
 	 	};
@@ -50,13 +50,11 @@
 
 	 };
 
-	 StatusController.$inject = ['$scope',"Authorization"];
-	 function StatusController ($scope,Authorization) {
+	 StatusController.$inject = ['$scope',"Authorization","$location"];
+	 function StatusController ($scope,Authorization,$location) {
 
 	 	var vm = this;
-	 	vm.logout = function(){
-	 		Authorization.logout();
-	 	}
+	 	
 
 	 };
 
