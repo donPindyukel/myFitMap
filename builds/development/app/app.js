@@ -11,7 +11,7 @@ angular.module('MyFitMap', ["ngRoute",
 	                        "MyFitMap.status",
 	                        "MyFitMap.profile",
 	                        "Authorize",
-	                        //"fitfire",
+	                        "fitfire",
 	                        "firebase"
 
 	                         ])

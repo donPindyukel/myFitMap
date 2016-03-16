@@ -50,10 +50,22 @@
 
 	 };
 
-	 StatusController.$inject = ['$scope',"Authorization","$location"];
-	 function StatusController ($scope,Authorization,$location) {
+	 StatusController.$inject = ['$scope',"Authorization","$location","$rootScope","$timeout"];
+	 function StatusController ($scope,Authorization,$location,$rootScope,$timeout) {
 
 	 	var vm = this;
+	 	/*vm.photo = false;
+	 	vm.nonPhoto = false;
+	 	$timeout(function(){
+
+	 	console.log($rootScope.currentUser.name);
+	 	},3000);*/
+		/*if($rootScope.currentUser.photo) {
+			vm.photo = true;
+
+		} else {
+			vm.nonPhoto = true; 
+		}	*/
 	 	
 
 	 };

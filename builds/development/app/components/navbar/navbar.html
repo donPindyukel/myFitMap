@@ -23,7 +23,11 @@
          <ul class="nav navbar-nav" ng-controller="StatusCtrl as sc">
            <li ng-hide="signedIn()"> <a href="" data-toggle="modal" data-target="#simple-dialog">Войти</a></li>
            <li ng-hide="signedIn()"> <a href="" data-toggle="modal" data-target="#registration-dialog">Регистрация</a></li>
-           <li><a href="#/profile">{{currentUser.name}}</a></li>
+           <li ng-if="signedIn()">
+           <a href="#/profile" ng-if="!currentUser.photo">{{currentUser.name}}</a>
+           <a href="#/profile"  ng-if="currentUser.photo"><img ng-src="{{currentUser.photo}}" class="header-avatar img-circle" width="20" hight="20" alt=""></a>
+           </li>
+           
            <li ng-show="signedIn()"> <a href="" ng-click="logout()">Выход</a></li>
 
          </ul>

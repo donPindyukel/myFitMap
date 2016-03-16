@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h3 class="panel-title">Смена e-mail</h3>
+	</div>
+	<div class="panel-body">
+	
+	<div class="alert alert-dismissible alert-success" ng-show="prf.emailSuccessNotif">
+				<button type="button" class="close" data-dismiss="alert">×</button> <strong>E-mail изменен!</strong>
+			</div>
+
+	<div class="alert alert-dismissible alert-danger" ng-show="prf.emailErrorNotif" >
+				<button type="button" class="close" data-dismiss="alert">×</button> <strong>Ошибка ввода!</strong>
+			</div>
+
+		<form class="form-horizontal" ng-submit="prf.changeEmail(prf.email)">
+			<fieldset class="center-block">
+				<!--=====================  pass================ -->
+				<div class="form-group">
+					<label for="inputOldEmail" class="col-xs-4 control-label">Текущий e-mail</label>
+					<div class="col-xs-6">
+						<input type="email" class="form-control" id="inputOldEmail" ng-model="prf.email.oldEmail"></div>
+				</div>
+				<!--=====================  pass================ -->
+				<div class="form-group">
+					<label for="inputEmail" class="col-xs-4 control-label">Новый e-mail</label>
+					<div class="col-xs-6">
+						<input type="email" class="form-control" id="inputEmail" ng-model="prf.email.newEmail"></div>
+				</div>
+				<!--===================== confirm ================ -->
+				<div class="form-group">
+					<label for="inputPassConfirm" class="col-xs-4 control-label">Подтверждение паролем</label>
+					<div class="col-xs-6">
+						<input type="password" class="form-control" id="inputPassConfirm" ng-model="prf.email.confirmPass"></div>
+				</div>
+
+				<!--===================== Buttons================ -->
+						<div class="form-group">
+							<div class="col-xs-6 col-xs-offset-4">
+								<button type="submit" class="btn btn-primary">Сохранить</button>
+								<button type="reset" class="btn btn-default">Отмена</button>
+							</div>
+						</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

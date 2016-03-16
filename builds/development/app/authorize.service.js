@@ -3,13 +3,13 @@
 	angular.module("Authorize",[])
 		.factory('Authorization', AuthorizeFactory);
 
-		AuthorizeFactory.$inject = ["FIREBASE_URL","$firebaseAuth","$firebaseArray","$firebaseObject","$rootScope","$location"];
-		function AuthorizeFactory (FIREBASE_URL,$firebaseAuth,$firebaseArray,$firebaseObject,$rootScope,$location){
+		AuthorizeFactory.$inject = ["$q","FIREBASE_URL","$firebaseAuth","$firebaseArray","$firebaseObject","$rootScope","$location"];
+		function AuthorizeFactory ($q,FIREBASE_URL,$firebaseAuth,$firebaseArray,$firebaseObject,$rootScope,$location){
 			 console.log("Auth Factory");
 			 var ref = new Firebase(FIREBASE_URL);
 			 var usersRef = ref.child('users');
 			 var auth = $firebaseAuth(ref);
-
+			 var usr;
 			 function authDataCallBack(authData) {
 
 			 	if (authData) {
@@ -17,9 +17,8 @@
        				var curUser = $firebaseObject(curUserRef);
        				curUser.$loaded(function(_user){
        					$rootScope.currentUser = _user;
-       					$location.path("");
-       					$location.path("profile");
-       					//console.log($rootScope.currentUser);
+       					$location.path("/profile");
+       					console.log("$rootScope.currentUser!!!!!!!!!!!!!!!!!");
        				});
        				       				 
   				} else {
@@ -79,15 +78,22 @@
 			 		auth.$unauth();
 			 	},
 
-			 	changePass: function (pass) {
-			 		auth.$changePassword(pass)
-			 			.then(function() {
-  							console.log("Password changed successfully!");
-					    }).catch(function(error) {
-  								console.error("Error: ", error);
-						});
+			 	getAuth: function() {
+			 		return auth;
+			 	},
 
+			 	grtRefDb: function() {
+			 		return ref;
+			 	},
+
+			 	getCurUserData: function() {
+
+					var authData = auth.$getAuth();
+					var curUserRef = usersRef.child(authData.uid);
+					var curUser = $firebaseObject(curUserRef);
+					return curUser;
 			 	}
+
 
 			 };
 
@@ -98,7 +104,9 @@
 			$rootScope.logout = function (){
 
 	 			authObj.logout();
+	 			$rootScope.currentUser = null;
 	 			var url = $location.path("");
+
 	 		
 
 			}
