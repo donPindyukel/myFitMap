@@ -1,0 +1,9 @@
+{
+  "firebase": "myfitmap",
+  "public": "builds\\dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -17,8 +17,13 @@
        				var curUser = $firebaseObject(curUserRef);
        				curUser.$loaded(function(_user){
        					$rootScope.currentUser = _user;
-       					$location.path("/profile");
-       					console.log("$rootScope.currentUser!!!!!!!!!!!!!!!!!");
+       					if( ($location.url() === "/") ||
+       						($location.url() === "/about") ||
+       						($location.url() === "/contact")  ) {
+       					
+       							$location.path("/profile");
+       					}
+       					//console.log("$rootScope.currentUser!!!!!!!!!!!!!!!!!");
        				});
        				       				 
   				} else {
@@ -33,7 +38,6 @@
 			 var authObj = {
 
 			 	register: function (_user) {
-			 			console.log(_user);
 			 		return auth.$createUser({
 			 			email:_user.email,
 			 			password:_user.password
@@ -93,8 +97,6 @@
 					var curUser = $firebaseObject(curUserRef);
 					return curUser;
 			 	}
-
-
 			 };
 
 			$rootScope.signedIn = function () {

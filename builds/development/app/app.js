@@ -10,10 +10,11 @@ angular.module('MyFitMap', ["ngRoute",
 	                        "MyFitMap.contact",
 	                        "MyFitMap.status",
 	                        "MyFitMap.profile",
+	                        "MyFitMap.exercises",
 	                        "Authorize",
 	                        "fitfire",
-	                        "firebase"
-
+	                        "firebase",
+	                        "ng-uploadcare"
 	                         ])
 .config(MyFitMapConfig)
 .constant("FIREBASE_URL", "https://myfitmap.firebaseio.com/");

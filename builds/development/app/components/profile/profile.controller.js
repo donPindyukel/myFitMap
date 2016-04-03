@@ -31,7 +31,7 @@ function waitForLoadUserData (Authorization,$rootScope,$q){
 		return deferred.promise;
 }
 
-ProfileCtrl.$inject = ["$scope","$rootScope","Authorization","$sanitize","fitfireservice","$timeout" ];
+ProfileCtrl.$inject = ["$scope","$rootScope","Authorization","$sanitize","fitfireservice","$timeout"];
 function ProfileCtrl($scope,$rootScope,Authorization,$sanitize,fitfireservice,$timeout) {
 	console.log("ProfileCtrl Start");
 	var vm = this;
@@ -137,9 +137,24 @@ function ProfileCtrl($scope,$rootScope,Authorization,$sanitize,fitfireservice,$t
 				}, 2000);
 
 			});
+	};
+
+	vm.widReady = function(photoLink){
+	//	console.log(photoLink);
+		$rootScope.currentUser.photo = photoLink.cdnUrl;
+		$rootScope.currentUser.$save().then(function(){
+			console.log("photo saved");
+		},function(){
+			console.log("error");
+		});
+	};
+
+	vm.avatarDelete = function () {
+		vm.widReady("");
+
+
 	};	
 
-	
-}
 
+}
 })();

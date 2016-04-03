@@ -1,15 +1,28 @@
 <div class="well">
-<img ng-if="prf.photo" ng-src="{{currentUser.photo}}" alt="User Photo" class="img-thumbnail center-block">
-<div class="wrapper" ng-if="prf.photo == 0">
+<img ng-if="currentUser.photo" ng-src="{{currentUser.photo}}" alt="User Photo" class="img-thumbnail center-block">
+<div class="wrapper" ng-if="!currentUser.photo">
 	<img  src="img/placehold.png" alt="User Photo" class="img-thumbnail center-block">
-	<form enctype="multipart/form-data" method="post">
-		<p>Загрузи фото</p>
-		<p>
-			<input type="file" name="photo" multiple accept="image/*,image/jpeg">
-			<input type="submit" value="Отправить"></p>
-	</form>
+	<div class="wrapper-profile-photo">
+		<p class="text-info">Загрузи фото</p>
+		
+    <input
+  uploadcare-widget
+  ng-model="prf.photoImg"
+  data-public-key="1f84a6e1bc872411c6db"
+  data-tabs="file url"
+  data-images-only="true"
+  data-preview-step="true"
+  data-clearable="true"
+  data-multiple="false"
+  data-crop=""
+  on-upload-complete="prf.widReady(info)"
+  on-widget-ready=""
+  value=""
+ /><br>
+	</div>
 	</div>
 	<br>
 
   <p>{{currentUser.name}}</p>
+
 </div>

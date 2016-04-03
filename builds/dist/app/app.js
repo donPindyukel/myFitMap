@@ -10,10 +10,11 @@ angular.module('MyFitMap', ["ngRoute",
 	                        "MyFitMap.contact",
 	                        "MyFitMap.status",
 	                        "MyFitMap.profile",
+	                        "MyFitMap.exercises",
 	                        "Authorize",
 	                        "fitfire",
-	                        "firebase"
-
+	                        "firebase",
+	                        "ng-uploadcare"
 	                         ])
 .config(MyFitMapConfig)
 .constant("FIREBASE_URL", "https://myfitmap.firebaseio.com/");
@@ -47,8 +48,13 @@ function MyFitMapConfig($routeProvider) {
        				var curUser = $firebaseObject(curUserRef);
        				curUser.$loaded(function(_user){
        					$rootScope.currentUser = _user;
-       					$location.path("/profile");
-       					console.log("$rootScope.currentUser!!!!!!!!!!!!!!!!!");
+       					if( ($location.url() === "/") ||
+       						($location.url() === "/about") ||
+       						($location.url() === "/contact")  ) {
+       					
+       							$location.path("/profile");
+       					}
+       					//console.log("$rootScope.currentUser!!!!!!!!!!!!!!!!!");
        				});
        				       				 
   				} else {
@@ -63,7 +69,6 @@ function MyFitMapConfig($routeProvider) {
 			 var authObj = {
 
 			 	register: function (_user) {
-			 			console.log(_user);
 			 		return auth.$createUser({
 			 			email:_user.email,
 			 			password:_user.password
@@ -123,8 +128,6 @@ function MyFitMapConfig($routeProvider) {
 					var curUser = $firebaseObject(curUserRef);
 					return curUser;
 			 	}
-
-
 			 };
 
 			$rootScope.signedIn = function () {
@@ -151,10 +154,11 @@ function MyFitMapConfig($routeProvider) {
 	angular.module("fitfire",[])
 		.factory('fitfireservice', fitfireFactory);
 
-	fitfireFactory.$inject = ["Authorization"];
-	function fitfireFactory (Authorization) {
+	fitfireFactory.$inject = ["Authorization","$rootScope","$firebaseObject","$firebaseArray"];
+	function fitfireFactory (Authorization,$rootScope,$firebaseObject,$firebaseArray) {
 
 		var auth = Authorization.getAuth();
+		var ref = Authorization.grtRefDb();
 		var fitfireObj = {
 
 			changePass: function (pass) {
@@ -164,11 +168,32 @@ function MyFitMapConfig($routeProvider) {
 
 			changeEmail: function (email) {
 					return auth.$changeEmail(email);
+			},
+
+			exerciseCreate: function (exercise) {
+				var exercisesGroup = $firebaseArray(ref.child("exercises/"+exercise.groupExers.id));
+				exercisesGroup.$add({
+						       name: exercise.name,
+						description: exercise.description,
+							  video: exercise.video,
+						  author_id: $rootScope.currentUser.$id,
+						date_create: Firebase.ServerValue.TIMESTAMP
+				}).then(function(ref) {
+  						var id = ref.key();
+  						console.log("added record with id " + id);
+  						exercisesGroup.$indexFor(id); // returns location in the array
+					});
+			},
+
+			getDataExercises: function() {
+				var exercisesTabl = $firebaseArray(ref.child("exercises"));
+				return exercisesTabl.$loaded();
 			}
+
 
 		}
 
-		return fitfireObj
+		return fitfireObj;
 
 
 	}
@@ -220,12 +245,20 @@ function MyFitMapContactCnf ($routeProvider) {
 		})
 };
 
-ContactCtrl.$inject = ["$scope","$rootScope"];
-function ContactCtrl($scope,$rootScope) {
+ContactCtrl.$inject = ["$scope","$rootScope","$http","$timeout","$q"];
+function ContactCtrl($scope,$rootScope,$http,$timeout,$q) {
 	console.log("ContactCtrl Start");
 	var vm = this;
 	vm.title = "Это страница с контактными данными";
 	$rootScope.curPath = "contact";
+	vm.cdnUrl = null;
+
+	vm.uploadComplete = function (object) {
+		//console.log (vm);
+		vm.cdnUrl = object.cdnUrl;
+
+	};
+	
 	console.log("ContactCtrl Finish");
 }
 
@@ -281,19 +314,27 @@ function MainCtrl($scope,$rootScope,Authorization) {
 	 //	vm.text = "dsgsd";
 	 	vm.regMsgSuccsess = false;
 	 	vm.regMsgError = false;
+	 	vm.passErrorNotif = false;
 	 	console.log("AuthController start");
 	 	vm.newUser = {
 	 		firstname:null,
 	 		lastname:null,
 	 		email:null,
-	 		password:null
+	 		password:null,
+	 		confPass:null
 	 	};
 	 	vm.credentails = {
 					email:null,
 					password:null
 				};
 	 	vm.register = function (){
-
+	 		if (vm.newUser.password!=vm.newUser.confPass) {
+	 			vm.newUser.password = null;
+	 			vm.newUser.confPass = null;
+	 			vm.passErrorNotif = true;
+	 			return;
+	 		}
+	 		vm.passErrorNotif = false;
 	 		Authorization.register(vm.newUser);
 	 		angular.element("#close-regform").trigger("click");
 
@@ -374,7 +415,7 @@ function waitForLoadUserData (Authorization,$rootScope,$q){
 		return deferred.promise;
 }
 
-ProfileCtrl.$inject = ["$scope","$rootScope","Authorization","$sanitize","fitfireservice","$timeout" ];
+ProfileCtrl.$inject = ["$scope","$rootScope","Authorization","$sanitize","fitfireservice","$timeout"];
 function ProfileCtrl($scope,$rootScope,Authorization,$sanitize,fitfireservice,$timeout) {
 	console.log("ProfileCtrl Start");
 	var vm = this;
@@ -480,9 +521,106 @@ function ProfileCtrl($scope,$rootScope,Authorization,$sanitize,fitfireservice,$t
 				}, 2000);
 
 			});
+	};
+
+	vm.widReady = function(photoLink){
+	//	console.log(photoLink);
+		$rootScope.currentUser.photo = photoLink.cdnUrl;
+		$rootScope.currentUser.$save().then(function(){
+			console.log("photo saved");
+		},function(){
+			console.log("error");
+		});
+	};
+
+	vm.avatarDelete = function () {
+		vm.widReady("");
+
+
 	};	
 
+
+}
+})();
+;(function(){
+angular.module("directive.AddNewExercise",[])
+	.directive("addNewExercise",AddNewExerciseDirective)
+	.controller("AddNewExsCtrl", AddNewExercisesCtrl);
+
+	AddNewExerciseDirective.inject = [];
+	function AddNewExerciseDirective ( ){
+		return {
+			templateUrl: "app/directives/addNewExercises/addNewexercisesTemplate.html",
+			restrict: "E",
+			controller: "AddNewExsCtrl",
+			controllerAs: "dirAddEx"
+		}
+	}
+
+	AddNewExercisesCtrl.$inject = ["$scope", "$rootScope", "fitfireservice"];
+	function AddNewExercisesCtrl ($scope,$rootScope,fitfireservice) {
+		var vm = this;
+		
+		vm.exercisesGroup = [];
+		vm.successNotif = false;
 	
+		fitfireservice.getDataExercises().then(function(data){
+		for (var i = 0; i<data.length; i++){
+			vm.exercisesGroup.push({
+									name: data[i].name,
+									id:data[i].$id 
+								  });
+		}
+	});
+	
+	vm.userExerciseCreate = function (exercises) {
+		fitfireservice.exerciseCreate(exercises);
+	};
+	}
+})();	
+;(function(){
+
+	
+	angular.module('MyFitMap.exercises', ["directive.AddNewExercise"])
+	.config(ExercisesConfig)
+	.controller('ExercisesCtrl',ExercisesCtrl);
+
+
+
+
+ExercisesConfig.$inject = ["$routeProvider"];
+function ExercisesConfig ($routeProvider) {
+	console.log("Exercises config");
+	$routeProvider
+		.when("/exercises",{
+			templateUrl:"/app/components/exercises/exercises.html",
+			controller:"ExercisesCtrl",
+			controllerAs:"exr",
+			resolve: {
+				curentLoad: waitForLoadUserData 
+			}
+		});
 }
 
+waitForLoadUserData.$inject = ["Authorization","$rootScope","$q"];
+function waitForLoadUserData (Authorization,$rootScope,$q){
+		var deferred = $q.defer();
+		var curUser = Authorization.getCurUserData();
+		curUser.$loaded(function(_user) {
+			$rootScope.currentUser = _user;
+			deferred.resolve();
+		});
+		return deferred.promise;
+}
+
+ExercisesCtrl.$inject = ["$scope","$rootScope","Authorization","$sanitize","fitfireservice","$timeout","$location"];
+function ExercisesCtrl($scope,$rootScope,Authorization,$sanitize,fitfireservice,$timeout,$location) {
+
+	var vm = this;
+	console.log("ExercisesCTRL start");
+	$rootScope.curPath = "exercises";
+	console.log("ExercisesCTRL finish");
+
+
+}
 })();

@@ -7,7 +7,9 @@
         <br></div>
       <form name="loginForm" novalidate ng-submit="ac.register()">
         <div class="modal-body">
-
+          <div class="alert alert-dismissible alert-danger" ng-show="ac.passErrorNotif" >
+        <button type="button" class="close" data-dismiss="alert">×</button> <strong>Подтверждение пароля неккоректно!</strong>
+      </div>
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Введите Имя" required ng-model="ac.newUser.firstname"></div>
           <div class="form-group">
@@ -16,8 +18,13 @@
             <input type="email" class="form-control" placeholder="E-mail" required ng-model="ac.newUser.email"></div>
           <div class="form-group">
             <input type="password" class="form-control" placeholder="Пароль" required ng-model="ac.newUser.password"></div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Подтверждение пароля" required ng-model="ac.newUser.confPass"></div>
 
         </div>
+        
+
+
         <div class="modal-footer">
           <button type="button" class="btn btn-warning" id="close-regform" data-dismiss="modal">Закрыть</button>
           <button type="submit" class="btn btn-primary"  ng-disabled="loginForm.$invalid" >Зарегистрироваться</button>

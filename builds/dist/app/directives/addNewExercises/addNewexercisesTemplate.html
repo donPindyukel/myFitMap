@@ -1,0 +1,52 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		<h2 class="panel-title">Добавить упражнение</h2>
+	</div>
+	<div class="panel-body">
+		<div class="row center-block">
+			<div class="alert alert-dismissible alert-success" ng-show="dirAddEx.successNotif">
+				<button type="button" class="close" data-dismiss="alert">×</button> <strong>Упражнение добавлено!</strong>
+			</div>
+			<form class="form-horizontal" ng-submit="dirAddEx.userExerciseCreate(dirAddEx.ExerciseData)">
+				<fieldset class="center-block">
+					<!--====================Group Exercises==============-->
+					<div class="form-group">
+      					<label for="select222" class="col-xs-4 control-label">Выберете группу упражнений</label>
+	      				<div class="col-xs-6">
+        					<select id="select222" class="form-control" ng-model="dirAddEx.ExerciseData.groupExers" ng-options="item.name for item in dirAddEx.exercisesGroup">
+        					</select>
+      					</div>
+    				</div>	
+					<!--===================== NAME================ -->
+					<div class="form-group">
+						<label for="inputName" class="col-xs-4 control-label">Название упражнения</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="inputName" ng-model="dirAddEx.ExerciseData.name"></div>
+					</div>
+					<!--===================== Description================ -->
+					<div class="form-group">
+						<label for="textArea" class="col-xs-4 control-label">Описание</label>
+						<div class="col-xs-6">
+							<textarea class="form-control" rows="3" id="textArea" ng-model="dirAddEx.ExerciseData.description"></textarea>
+        					
+      					</div>
+					</div>
+					<!--===================== Video link================ -->
+					<div class="form-group">
+						<label for="inputVideo" class="col-xs-4 control-label">Ссылка на видео</label>
+						<div class="col-xs-6">
+							<input type="text" class="form-control" id="inputVideo" ng-model="dirAddEx.ExerciseData.video"></div>
+					</div>
+					<!--===================== Buttons================ -->
+					<div class="form-group">
+						<div class="col-xs-6 col-xs-offset-4">
+							<button type="submit" class="btn btn-primary">Сохранить</button>
+							<button type="button" class="btn btn-default" ng-click="dirAddEx.cancel()">Отмена</button>
+						</div>
+					</div>
+				</fieldset>
+
+			</form>
+		</div>
+	</div>
+</div>

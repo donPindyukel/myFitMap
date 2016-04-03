@@ -49,6 +49,9 @@ gulp.task('libs', function() {
   gulp.src(bc+'bootstrap-material-design/dist/**/*.*')
       .pipe(gulp.dest('./builds/dist/libs/bootstrap-material-design/'));
 
+  gulp.src(bc+'Uploadcare/uploadcare.full.min.js')
+      .pipe(gulp.dest('./builds/dist/libs/Uploadcare/'));
+
   gulp.src([bc+'angular/angular.js',
             bc+'angular-animate/angular-animate.js',
             bc+'angular-cookies/angular-cookies.js',
@@ -60,6 +63,7 @@ gulp.task('libs', function() {
             bc+'angular-touch/angular-touch.js',
             bc+'firebase/firebase.js',
             bc+'angularfire/dist/angularfire.js',
+            bc+'angular-uploadcare/angular-uploadcare.js'
           ])
       .pipe(concat('angular.concat.js'))
       .pipe(gulp.dest('./builds/dist/libs/angular/'));

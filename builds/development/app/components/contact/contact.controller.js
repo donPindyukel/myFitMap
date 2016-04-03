@@ -16,12 +16,20 @@ function MyFitMapContactCnf ($routeProvider) {
 		})
 };
 
-ContactCtrl.$inject = ["$scope","$rootScope"];
-function ContactCtrl($scope,$rootScope) {
+ContactCtrl.$inject = ["$scope","$rootScope","$http","$timeout","$q"];
+function ContactCtrl($scope,$rootScope,$http,$timeout,$q) {
 	console.log("ContactCtrl Start");
 	var vm = this;
 	vm.title = "Это страница с контактными данными";
 	$rootScope.curPath = "contact";
+	vm.cdnUrl = null;
+
+	vm.uploadComplete = function (object) {
+		//console.log (vm);
+		vm.cdnUrl = object.cdnUrl;
+
+	};
+	
 	console.log("ContactCtrl Finish");
 }
 

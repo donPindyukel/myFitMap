@@ -12,19 +12,27 @@
 	 //	vm.text = "dsgsd";
 	 	vm.regMsgSuccsess = false;
 	 	vm.regMsgError = false;
+	 	vm.passErrorNotif = false;
 	 	console.log("AuthController start");
 	 	vm.newUser = {
 	 		firstname:null,
 	 		lastname:null,
 	 		email:null,
-	 		password:null
+	 		password:null,
+	 		confPass:null
 	 	};
 	 	vm.credentails = {
 					email:null,
 					password:null
 				};
 	 	vm.register = function (){
-
+	 		if (vm.newUser.password!=vm.newUser.confPass) {
+	 			vm.newUser.password = null;
+	 			vm.newUser.confPass = null;
+	 			vm.passErrorNotif = true;
+	 			return;
+	 		}
+	 		vm.passErrorNotif = false;
 	 		Authorization.register(vm.newUser);
 	 		angular.element("#close-regform").trigger("click");
 
